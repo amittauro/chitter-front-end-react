@@ -1,6 +1,32 @@
 import React, { Component } from 'react';
 
 class SignIn extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {username: '', password: ''};
+    this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleUsername = this.handleUsername.bind(this);
+    this.handlePassword = this.handlePassword.bind(this);
+  }
+
+  handleUsername(event) {
+    this.setState({username: event.target.value,})
+  }
+
+  handlePassword(event) {
+    this.setState({password: event.target.value,})
+  }
+
+  handleSubmit(event) {
+    event.preventDefault();
+    const body = `{"session": {"handle":"${this.state.username}", "password":"${this.state.password}"}}`
+    fetch("https://chitter-backend-api-v2.herokuapp.com/sessions", {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: body
+    })
+    .then(response => response.json())
+  }
   render() {
     return (
       <form onSubmit={this.handleSubmit}>

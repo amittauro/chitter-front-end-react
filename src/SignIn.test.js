@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import SignIn from './SignUp';
+import SignIn from './SignIn';
 
 test('renders form for signing in', () => {
   render(<SignIn />);
@@ -20,7 +20,7 @@ test('can fill in the form', () => {
   expect(password).toHaveValue('password')
 })
 
-test('wheb submitting the form asks fetch to post data to api', () => {
+test('when submitting the form asks fetch to post data to api', () => {
   jest.spyOn(window, "fetch")
   render(<SignIn />);
   const username = screen.getByLabelText('Username:');
@@ -29,5 +29,10 @@ test('wheb submitting the form asks fetch to post data to api', () => {
   userEvent.type(username, 'user1')
   userEvent.type(password, 'password1')
   userEvent.click(button)
-  expect(window.fetch).toHaveBeenCalled()
+  const body = `{"session": {"handle":"user1", "password":"password1"}}`
+  expect(window.fetch).toHaveBeenCalledWith("https://chitter-backend-api-v2.herokuapp.com/sessions", {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body: body
+  })
 })

@@ -4,7 +4,7 @@ class Peeps extends React.Component {
   constructor(props) {
     super(props);
     this.state = { peeps: [] }
-  };
+  }
 
   componentDidMount() {
     fetch("https://chitter-backend-api-v2.herokuapp.com/peeps")
@@ -20,13 +20,11 @@ class Peeps extends React.Component {
         {this.state.peeps.map(peep => (
           <li key={peep.id}>
             {peep.body}
-            </li>
+          </li>
         ))}
-        </ul>
+      </ul>
     );
   }
-
-
 }
 
 export default Peeps

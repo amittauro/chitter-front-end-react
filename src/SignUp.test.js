@@ -29,5 +29,10 @@ test('wheb submitting the form asks fetch to post data to api', () => {
   userEvent.type(username, 'user1')
   userEvent.type(password, 'password1')
   userEvent.click(button)
-  expect(window.fetch).toHaveBeenCalled()
+  const body = `{"user": {"handle":"user1", "password":"password1"}}`
+  expect(window.fetch).toHaveBeenCalledWith("https://chitter-backend-api-v2.herokuapp.com/users", {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body: body
+  })
 })

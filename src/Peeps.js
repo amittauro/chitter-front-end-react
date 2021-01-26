@@ -1,20 +1,20 @@
-import React, { Component } from 'react';
+import React, { Component } from 'react'
 
 class Peeps extends React.Component {
-  constructor(props) {
-    super(props);
+  constructor (props) {
+    super(props)
     this.state = { peeps: [] }
   }
 
-  componentDidMount() {
-    fetch("https://chitter-backend-api-v2.herokuapp.com/peeps")
-    .then(res => res.json())
-    .then(data => {
-      this.setState({peeps: data})
-    })
+  componentDidMount () {
+    fetch('https://chitter-backend-api-v2.herokuapp.com/peeps')
+      .then(res => res.json())
+      .then(data => {
+        this.setState({ peeps: data })
+      })
   }
 
-  render() {
+  render () {
     return (
       <ul>
         {this.state.peeps.map(peep => (
@@ -23,7 +23,7 @@ class Peeps extends React.Component {
           </li>
         ))}
       </ul>
-    );
+    )
   }
 }
 

@@ -10,11 +10,11 @@ class SignIn extends React.Component {
   }
 
   handleUsername(event) {
-    this.setState({username: event.target.value,})
+    this.setState({username: event.target.value})
   }
 
   handlePassword(event) {
-    this.setState({password: event.target.value,})
+    this.setState({password: event.target.value})
   }
 
   handleSubmit(event) {

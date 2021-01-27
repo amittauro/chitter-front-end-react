@@ -1,6 +1,7 @@
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import SignIn from './SignIn';
+import mockSessionsData from './mocks/sessions.json'
 
 test('renders form for signing in', () => {
   render(<SignIn />);
@@ -21,7 +22,11 @@ test('can fill in the form', () => {
 })
 
 test('when submitting the form asks fetch to post data to api', () => {
-  jest.spyOn(window, "fetch")
+  jest.spyOn(window, "fetch").mockImplementation(() => {
+    return Promise.resolve({
+      json: () => Promise.resolve(mockSessionsData)
+    })
+  })
   render(<SignIn />);
   const username = screen.getByLabelText('Username:');
   const password = screen.getByLabelText('Password:');
@@ -35,4 +40,21 @@ test('when submitting the form asks fetch to post data to api', () => {
     headers: {'Content-Type': 'application/json'},
     body: body
   })
+})
+
+test('after signing in shows the post peep form', () => {
+  jest.spyOn(window, "fetch").mockImplementation(() => {
+    return Promise.resolve({
+      json: () => Promise.resolve(mockSessionsData)
+    })
+  })
+  render(<SignIn />)
+  const username = screen.getByLabelText('Username:');
+  const password = screen.getByLabelText('Password:');
+  const button = screen.getByRole("button")
+  userEvent.type(username, 'user1')
+  userEvent.type(password, 'password1')
+  userEvent.click(button)
+  const peep = screen.getByLabelText('Peep:')
+  expect(peep).toBeInTheDocument()
 })

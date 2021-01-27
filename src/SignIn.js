@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
+import PostPeep from './PostPeep';
 
 class SignIn extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {username: '', password: ''};
+    this.state = {username: '', password: '', submitted: false, userId: '', sessionKey: ''};
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleUsername = this.handleUsername.bind(this);
     this.handlePassword = this.handlePassword.bind(this);
@@ -19,6 +20,7 @@ class SignIn extends React.Component {
 
   handleSubmit(event) {
     event.preventDefault();
+    this.setState({submitted: true})
     const body = `{"session": {"handle":"${this.state.username}", "password":"${this.state.password}"}}`
     fetch("https://chitter-backend-api-v2.herokuapp.com/sessions", {
       method: 'POST',
@@ -26,22 +28,32 @@ class SignIn extends React.Component {
       body: body
     })
     .then(response => response.json())
+    .then(data => {
+      this.setState({userId: data.user_id})
+      this.setState({sessionKey: data.session_key})
+    })
   }
 
   render() {
-    return (
-      <form onSubmit={this.handleSubmit}>
-        <label>
-          Username:
-          <input type="text" name="username" onChange={this.handleUsername} />
-        </label>
-        <label>
-          Password:
-          <input type="text" name="password" onChange={this.handlePassword} />
-        </label>
-        <input type="submit" value="Submit" />
-      </form>
-    );
+    if (this.state.submitted === false) {
+      return (
+        <form onSubmit={this.handleSubmit}>
+          <label>
+            Username:
+            <input type="text" name="username" onChange={this.handleUsername} />
+          </label>
+          <label>
+            Password:
+            <input type="text" name="password" onChange={this.handlePassword} />
+          </label>
+          <input type="submit" value="Submit" />
+        </form>
+      );
+    } else {
+      return (
+        <PostPeep userId={this.state.userId} sessionKey={this.state.sessionKey} />
+      )
+    }
   }
 }
 

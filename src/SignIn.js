@@ -1,41 +1,41 @@
-import React, { Component } from 'react';
-import PostPeep from './PostPeep';
+import React from 'react'
+import PostPeep from './PostPeep'
 
 class SignIn extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {username: '', password: '', submitted: false, userId: '', sessionKey: ''};
-    this.handleSubmit = this.handleSubmit.bind(this);
-    this.handleUsername = this.handleUsername.bind(this);
-    this.handlePassword = this.handlePassword.bind(this);
+  constructor (props) {
+    super(props)
+    this.state = { username: '', password: '', signedIn: false, userId: '', sessionKey: '' }
+    this.handleSubmit = this.handleSubmit.bind(this)
+    this.handleUsername = this.handleUsername.bind(this)
+    this.handlePassword = this.handlePassword.bind(this)
   }
 
-  handleUsername(event) {
-    this.setState({username: event.target.value})
+  handleUsername (event) {
+    this.setState({ username: event.target.value })
   }
 
-  handlePassword(event) {
-    this.setState({password: event.target.value})
+  handlePassword (event) {
+    this.setState({ password: event.target.value })
   }
 
-  handleSubmit(event) {
-    event.preventDefault();
-    this.setState({submitted: true})
+  handleSubmit (event) {
+    event.preventDefault()
+    this.setState({ submitted: true })
     const body = `{"session": {"handle":"${this.state.username}", "password":"${this.state.password}"}}`
-    fetch("https://chitter-backend-api-v2.herokuapp.com/sessions", {
+    fetch('https://chitter-backend-api-v2.herokuapp.com/sessions', {
       method: 'POST',
-      headers: {'Content-Type': 'application/json'},
+      headers: { 'Content-Type': 'application/json' },
       body: body
     })
-    .then(response => response.json())
-    .then(data => {
-      this.setState({userId: data.user_id})
-      this.setState({sessionKey: data.session_key})
-    })
+      .then(response => response.json())
+      .then(data => {
+        this.setState({ userId: data.user_id.toString() })
+        this.setState({ sessionKey: data.session_key })
+      })
   }
 
-  render() {
-    if (this.state.submitted === false) {
+  render () {
+    if (this.state.signedIn === false) {
       return (
         <form onSubmit={this.handleSubmit}>
           <label>
@@ -48,7 +48,7 @@ class SignIn extends React.Component {
           </label>
           <input type="submit" value="Submit" />
         </form>
-      );
+      )
     } else {
       return (
         <PostPeep userId={this.state.userId} sessionKey={this.state.sessionKey} />

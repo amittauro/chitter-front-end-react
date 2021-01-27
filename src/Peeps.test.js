@@ -12,3 +12,13 @@ test('renders peeps from api', async () => {
   const element = await waitFor(() => screen.getByText("my first peep :)"));
   expect(element).toBeInTheDocument();
 })
+
+test('makes fetch request to right api', () => {
+  jest.spyOn(window, "fetch").mockImplementation(() => {
+    return Promise.resolve({
+      json: () => Promise.resolve(mockApiData)
+    })
+  })
+  render(<Peeps />)
+  expect(window.fetch).toHaveBeenCalledWith('https://chitter-backend-api-v2.herokuapp.com/peeps')
+})

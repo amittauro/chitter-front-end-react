@@ -27,6 +27,7 @@ class SignIn extends React.Component {
     })
     .then(response => response.json())
   }
+
   render() {
     return (
       <form onSubmit={this.handleSubmit}>

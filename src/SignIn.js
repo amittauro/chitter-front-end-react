@@ -4,7 +4,7 @@ import PostPeep from './PostPeep'
 class SignIn extends React.Component {
   constructor (props) {
     super(props)
-    this.state = { username: '', password: '', signedIn: false, userId: '', sessionKey: '' }
+    this.state = { username: '', password: '', isLoaded: false, userId: '', sessionKey: '' }
     this.handleSubmit = this.handleSubmit.bind(this)
     this.handleUsername = this.handleUsername.bind(this)
     this.handlePassword = this.handlePassword.bind(this)
@@ -20,7 +20,6 @@ class SignIn extends React.Component {
 
   handleSubmit (event) {
     event.preventDefault()
-    this.setState({ submitted: true })
     const body = `{"session": {"handle":"${this.state.username}", "password":"${this.state.password}"}}`
     fetch('https://chitter-backend-api-v2.herokuapp.com/sessions', {
       method: 'POST',
@@ -29,15 +28,19 @@ class SignIn extends React.Component {
     })
       .then(response => response.json())
       .then(data => {
-        this.setState({ userId: data.user_id.toString() })
-        this.setState({ sessionKey: data.session_key })
+        this.setState({
+          userId: data.user_id.toString(),
+          sessionKey: data.session_key,
+          isLoaded: true
+         })
       })
   }
 
   render () {
-    if (this.state.signedIn === false) {
+    if (this.state.isLoaded === false) {
       return (
         <form onSubmit={this.handleSubmit}>
+          Sign In
           <label>
             Username:
             <input type="text" name="username" onChange={this.handleUsername} />

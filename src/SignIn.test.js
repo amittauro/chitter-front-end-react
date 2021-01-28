@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react'
+import { render, screen, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import SignIn from './SignIn'
 import mockSessionsData from './mocks/sessions.json'
@@ -42,7 +42,7 @@ test('when submitting the form asks fetch to post data to api', () => {
   })
 })
 
-test('after signing in shows the post peep form', () => {
+test('after signing in shows the post peep form', async () => {
   jest.spyOn(window, 'fetch').mockImplementation(() => {
     return Promise.resolve({
       json: () => Promise.resolve(mockSessionsData)
@@ -55,6 +55,6 @@ test('after signing in shows the post peep form', () => {
   userEvent.type(username, 'user1')
   userEvent.type(password, 'password1')
   userEvent.click(button)
-  const peep = screen.getByLabelText('Peep:')
+  const peep = await waitFor(() => screen.getByLabelText('Peep:'))
   expect(peep).toBeInTheDocument()
 })

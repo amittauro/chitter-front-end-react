@@ -1,9 +1,10 @@
 import React from 'react'
+import SignIn from './SignIn'
 
 class SignUp extends React.Component {
   constructor (props) {
     super(props)
-    this.state = { username: '', password: '' }
+    this.state = { username: '', password: '', isLoaded: false }
     this.handleSubmit = this.handleSubmit.bind(this)
     this.handleUsername = this.handleUsername.bind(this)
     this.handlePassword = this.handlePassword.bind(this)
@@ -26,23 +27,34 @@ class SignUp extends React.Component {
       body: body
     })
       .then(response => response.json())
+      .then(
+        (result) => {
+          this.setState({isLoaded: true})
+        }
+      )
   }
 
   render () {
-    return (
-      <form onSubmit={this.handleSubmit}>
-        Sign Up
-        <label>
-          Username:
-          <input type="text" name="username" onChange={this.handleUsername} />
-        </label>
-        <label>
-          Password:
-          <input type="text" name="password" onChange={this.handlePassword} />
-        </label>
-        <input type="submit" value="Submit" />
-      </form>
-    )
+    if (this.state.isLoaded === false) {
+      return (
+        <form onSubmit={this.handleSubmit}>
+          Sign Up
+          <label>
+            Username:
+            <input type="text" name="username" onChange={this.handleUsername} />
+          </label>
+          <label>
+            Password:
+            <input type="text" name="password" onChange={this.handlePassword} />
+          </label>
+          <input type="submit" value="Submit" />
+        </form>
+      )
+    } else {
+      return (
+        <SignIn />
+      )
+    }
   }
 }
 

@@ -9,7 +9,7 @@ test('renders peeps from api', async () => {
       json: () => Promise.resolve(mockApiData)
     })
   })
-  render(<Peeps />)
+  render(<Peeps sessionId="1" sessionKey="1" />)
   const element = await waitFor(() => screen.getByText('my first peep :)'))
   expect(element).toBeInTheDocument()
 })
@@ -20,7 +20,7 @@ test('makes fetch request to right api', () => {
       json: () => Promise.resolve(mockApiData)
     })
   })
-  render(<Peeps />)
+  render(<Peeps sessionId="1" sessionKey="1" />)
   expect(window.fetch).toHaveBeenCalledWith('https://chitter-backend-api-v2.herokuapp.com/peeps')
 })
 
@@ -30,8 +30,19 @@ test('can refresh the peeps', async () => {
       json: () => Promise.resolve(mockApiData)
     })
   })
-  render(<Peeps />)
-  const button = await waitFor(() => screen.getByRole('button'))
+  render(<Peeps sessionId="1" sessionKey="1" />)
+  const button = await waitFor(() => screen.getByText('Refresh Peeps'))
   userEvent.click(button)
   expect(window.fetch).toHaveBeenCalledWith('https://chitter-backend-api-v2.herokuapp.com/peeps')
+})
+
+test('renders the post peep', async () => {
+  jest.spyOn(window, 'fetch').mockImplementation(() => {
+    return Promise.resolve({
+      json: () => Promise.resolve(mockApiData)
+    })
+  })
+  render(<Peeps sessionId="1" sessionKey="1" />)
+  const peep = await waitFor(() => screen.getByLabelText(/Peep:/))
+  expect(peep).toBeInTheDocument()
 })

@@ -1,4 +1,7 @@
 import React from 'react'
+import Peep from './Peep'
+import PostPeep from './PostPeep'
+import PropTypes from 'prop-types'
 
 class Peeps extends React.Component {
   constructor (props) {
@@ -39,12 +42,13 @@ class Peeps extends React.Component {
     } else {
       return (
         <div>
+          <PostPeep sessionId={this.props.sessionId} sessionKey={this.props.sessionKey} />
           Peeps
           <button type="button" onClick={this.refreshPeeps}>Refresh Peeps</button>
           <ul>
             {this.state.peeps.map(peep => (
               <li key={peep.id}>
-                {peep.body}
+                <Peep id={peep.id.toString()} userId={peep.user.id.toString()} sessionId={this.props.sessionId} sessionKey={this.props.sessionKey} body={peep.body} />
               </li>
             ))}
           </ul>
@@ -52,6 +56,11 @@ class Peeps extends React.Component {
       )
     }
   }
+}
+
+Peeps.propTypes = {
+  sessionId: PropTypes.string.isRequired,
+  sessionKey: PropTypes.string.isRequired
 }
 
 export default Peeps

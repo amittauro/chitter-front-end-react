@@ -1,5 +1,5 @@
 import React from 'react'
-import PostPeep from './PostPeep'
+import Peeps from './Peeps'
 
 class SignIn extends React.Component {
   constructor (props) {
@@ -54,7 +54,7 @@ class SignIn extends React.Component {
       )
     } else {
       return (
-        <PostPeep userId={this.state.userId} sessionKey={this.state.sessionKey} />
+        <Peeps sessionId={this.state.userId} sessionKey={this.state.sessionKey} />
       )
     }
   }

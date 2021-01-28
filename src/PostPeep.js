@@ -1,6 +1,5 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import Peeps from './Peeps'
 
 class PostPeep extends React.Component {
   constructor (props) {
@@ -16,7 +15,7 @@ class PostPeep extends React.Component {
 
   handleSubmit (event) {
     event.preventDefault()
-    const body = `{"peep": {"user_id":"${this.props.userId}", "body":"${this.state.peep}"}}`
+    const body = `{"peep": {"user_id":"${this.props.sessionId}", "body":"${this.state.peep}"}}`
     fetch('https://chitter-backend-api-v2.herokuapp.com/peeps', {
       method: 'POST',
       headers: {
@@ -38,14 +37,13 @@ class PostPeep extends React.Component {
             </label>
             <input type="submit" value="Submit" />
           </form>
-          <Peeps />
         </div>
     )
   }
 }
 
 PostPeep.propTypes = {
-  userId: PropTypes.string.isRequired,
+  sessionId: PropTypes.string.isRequired,
   sessionKey: PropTypes.string.isRequired
 }
 

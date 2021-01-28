@@ -1,5 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import Peeps from './Peeps'
 
 class PostPeep extends React.Component {
   constructor (props) {
@@ -29,13 +30,16 @@ class PostPeep extends React.Component {
 
   render () {
     return (
-      <form onSubmit={this.handleSubmit}>
-        <label>
-          Peep:
-          <input type="text" name="username" onChange={this.handlePeep} />
-        </label>
-        <input type="submit" value="Submit" />
-      </form>
+        <div>
+          <form onSubmit={this.handleSubmit}>
+            <label>
+              Peep:
+              <input type="text" name="username" onChange={this.handlePeep} />
+            </label>
+            <input type="submit" value="Submit" />
+          </form>
+          <Peeps />
+        </div>
     )
   }
 }

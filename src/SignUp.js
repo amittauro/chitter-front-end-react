@@ -29,7 +29,7 @@ class SignUp extends React.Component {
       .then(response => response.json())
       .then(
         (result) => {
-          this.setState({isLoaded: true})
+          this.setState({ isLoaded: true })
         }
       )
   }

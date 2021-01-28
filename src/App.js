@@ -3,26 +3,26 @@ import SignUp from './SignUp'
 import SignIn from './SignIn'
 
 class App extends React.Component {
-  constructor(props) {
+  constructor (props) {
     super(props)
     this.state = { signIn: false }
     this.handleSignIn = this.handleSignIn.bind(this)
   }
 
-  handleSignIn(event) {
-    this.setState({ signIn: true} )
+  handleSignIn (event) {
+    this.setState({ signIn: true })
   }
 
-  render() {
+  render () {
     if (this.state.signIn === false) {
-      return(
+      return (
         <div>
           <SignUp />
           <button onClick={this.handleSignIn}>Sign In</button>
         </div>
       )
     } else {
-      return(
+      return (
         <SignIn />
       )
     }

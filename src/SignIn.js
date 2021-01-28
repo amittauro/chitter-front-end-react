@@ -32,7 +32,7 @@ class SignIn extends React.Component {
           userId: data.user_id.toString(),
           sessionKey: data.session_key,
           isLoaded: true
-         })
+        })
       })
   }
 

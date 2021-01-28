@@ -1,6 +1,7 @@
 import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import PostPeep from './PostPeep'
+import mockApiData from './mocks/peeps.json'
 
 test('renders form for posting peep', () => {
   render(<PostPeep />)
@@ -31,4 +32,15 @@ test('when submitting the form asks fetch to post data to api', () => {
     },
     body: body
   })
+})
+
+test('renders the peeps', () => {
+  jest.spyOn(window, 'fetch').mockImplementation(() => {
+    return Promise.resolve({
+      json: () => Promise.resolve(mockApiData)
+    })
+  })
+  render(<PostPeep userId="1" sessionKey="a_valid_session_key" />)
+  const peeps = screen.getByText(/Peeps/)
+  expect(peeps).toBeInTheDocument()
 })

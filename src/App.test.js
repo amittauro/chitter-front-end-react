@@ -10,7 +10,7 @@ test('renders form for signing up', () => {
 
 test('renders form for signing in', () => {
   render(<App />)
-  const button = screen.getByText("Sign In")
+  const button = screen.getByText('Sign In')
   userEvent.click(button)
   const element = screen.getByText(/Sign In/)
   expect(element).toBeInTheDocument()

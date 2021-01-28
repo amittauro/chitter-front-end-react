@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
-import PostPeep from './PostPeep'
+import PostPeep from '../PostPeep'
 import mockApiData from './mocks/peeps.json'
 
 test('renders form for posting peep', () => {

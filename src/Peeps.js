@@ -6,7 +6,7 @@ import PropTypes from 'prop-types'
 class Peeps extends React.Component {
   constructor (props) {
     super(props)
-    this.state = { peeps: [], isLoaded: false, postedPeep: '' }
+    this.state = { peeps: [], isLoaded: false }
     this.refreshPeeps = this.refreshPeeps.bind(this)
   }
 
@@ -16,8 +16,7 @@ class Peeps extends React.Component {
       .then(data => {
         this.setState({
           peeps: data,
-          isLoaded: true,
-          postedPeep: data[0].body
+          isLoaded: true
         })
       })
   }
@@ -28,8 +27,7 @@ class Peeps extends React.Component {
       .then(data => {
         this.setState({
           peeps: data,
-          isLoaded: true,
-          postedPeep: data[0].body
+          isLoaded: true
         })
       })
   }
@@ -43,7 +41,7 @@ class Peeps extends React.Component {
       return (
         <div>
           <PostPeep sessionId={this.props.sessionId} sessionKey={this.props.sessionKey} />
-          Peeps
+          <h1>Peeps</h1>
           <button type="button" onClick={this.refreshPeeps}>Refresh Peeps</button>
           <ul>
             {this.state.peeps.map(peep => (

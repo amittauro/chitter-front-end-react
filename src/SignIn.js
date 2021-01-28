@@ -4,7 +4,7 @@ import Peeps from './Peeps'
 class SignIn extends React.Component {
   constructor (props) {
     super(props)
-    this.state = { username: '', password: '', isLoaded: false, userId: '', sessionKey: '' }
+    this.state = { username: '', password: '', isLoaded: false, userId: '', sessionKey: '', error: null }
     this.handleSubmit = this.handleSubmit.bind(this)
     this.handleUsername = this.handleUsername.bind(this)
     this.handlePassword = this.handlePassword.bind(this)
@@ -27,20 +27,28 @@ class SignIn extends React.Component {
       body: body
     })
       .then(response => response.json())
-      .then(data => {
-        this.setState({
-          userId: data.user_id.toString(),
-          sessionKey: data.session_key,
-          isLoaded: true
-        })
-      })
+      .then(
+        (data) => {
+          this.setState({
+            userId: data.user_id.toString(),
+            sessionKey: data.session_key,
+            isLoaded: true
+          })
+        },
+        (error) => {
+          this.setState({
+            isLoaded: true,
+            error
+          })
+        }
+      )
   }
 
   render () {
     if (this.state.isLoaded === false) {
       return (
         <form onSubmit={this.handleSubmit}>
-          Sign In
+          <h1>Sign In</h1>
           <label>
             Username:
             <input type="text" name="username" onChange={this.handleUsername} />

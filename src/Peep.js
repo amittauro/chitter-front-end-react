@@ -1,5 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import './css/Peep.css'
 
 function Peep (props) {
   const { id, sessionId, sessionKey, body } = props
@@ -11,15 +12,13 @@ function Peep (props) {
       method: 'PUT',
       headers: myHeaders
     })
-      .then((response) => {
-        response.json()
-      })
+      .then(response => response.json())
   }
 
   return (
     <div>
       {body}
-      <button onClick={handleLike}>like</button>
+      <button className="likePeep" onClick={handleLike}>like</button>
     </div>
   )
 }

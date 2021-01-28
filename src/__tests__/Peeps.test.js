@@ -1,5 +1,5 @@
 import { render, screen, waitFor } from '@testing-library/react'
-import Peeps from './peeps'
+import Peeps from '../Peeps'
 import mockApiData from './mocks/peeps.json'
 import userEvent from '@testing-library/user-event'
 

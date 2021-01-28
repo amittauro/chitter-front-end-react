@@ -1,6 +1,6 @@
 import { render, screen, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
-import SignIn from './SignIn'
+import SignIn from '../SignIn'
 import mockSessionsData from './mocks/sessions.json'
 import mockApiData from './mocks/peeps.json'
 
@@ -23,9 +23,10 @@ test('can fill in the form', () => {
 })
 
 test('when submitting the form asks fetch to post data to api', () => {
+  window.alert = jest.fn()
   jest.spyOn(window, 'fetch').mockImplementation(() => {
     return Promise.resolve({
-      json: () => Promise.resolve(mockSessionsData)
+      json: () => Promise.resolve(mockApiData)
     })
   })
   render(<SignIn />)
@@ -43,7 +44,9 @@ test('when submitting the form asks fetch to post data to api', () => {
   })
 })
 
-// test('after signing in shows the post peep form', async () => {
+// having to use wrong api because showing peeps testing alert is called?
+
+// test('after signing in shows the peeps', async () => {
 //   jest.spyOn(window, 'fetch').mockImplementation(() => {
 //     return Promise.resolve({
 //       json: () => Promise.resolve(mockApiData)
@@ -58,4 +61,4 @@ test('when submitting the form asks fetch to post data to api', () => {
 //   userEvent.click(button)
 //   const peep = await waitFor(() => screen.getByLabelText('Peep:'))
 //   expect(peep).toBeInTheDocument()
-// })
+//

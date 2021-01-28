@@ -30,6 +30,7 @@ class PostPeep extends React.Component {
   render () {
     return (
         <div>
+          <h1>Post Peep</h1>
           <form onSubmit={this.handleSubmit}>
             <label>
               Peep:

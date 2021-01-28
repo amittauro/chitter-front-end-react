@@ -1,5 +1,6 @@
 import React from 'react'
 import SignIn from './SignIn'
+import './css/forms.css'
 
 class SignUp extends React.Component {
   constructor (props) {
@@ -38,7 +39,7 @@ class SignUp extends React.Component {
     if (this.state.isLoaded === false) {
       return (
         <form onSubmit={this.handleSubmit}>
-          Sign Up
+          <h1>Sign Up</h1>
           <label>
             Username:
             <input type="text" name="username" onChange={this.handleUsername} />

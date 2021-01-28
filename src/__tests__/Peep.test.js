@@ -1,6 +1,6 @@
 import { render, screen, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
-import Peep from './Peep'
+import Peep from '../Peep'
 
 test('renders a Peep with a like button and peep body', () => {
   render(<Peep id="1" userId="2" sessionId="3" sessionKey="a_valid_session_key" body="my first peep" />)

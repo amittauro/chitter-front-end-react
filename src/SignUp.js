@@ -1,36 +1,37 @@
-import React, { Component } from 'react';
+import React from 'react'
 
 class SignUp extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {username: '', password: ''};
-    this.handleSubmit = this.handleSubmit.bind(this);
-    this.handleUsername = this.handleUsername.bind(this);
-    this.handlePassword = this.handlePassword.bind(this);
+  constructor (props) {
+    super(props)
+    this.state = { username: '', password: '' }
+    this.handleSubmit = this.handleSubmit.bind(this)
+    this.handleUsername = this.handleUsername.bind(this)
+    this.handlePassword = this.handlePassword.bind(this)
   }
 
-  handleUsername(event) {
-    this.setState({username: event.target.value})
+  handleUsername (event) {
+    this.setState({ username: event.target.value })
   }
 
-  handlePassword(event) {
-    this.setState({password: event.target.value})
+  handlePassword (event) {
+    this.setState({ password: event.target.value })
   }
 
-  handleSubmit(event) {
-    event.preventDefault();
+  handleSubmit (event) {
+    event.preventDefault()
     const body = `{"user": {"handle":"${this.state.username}", "password":"${this.state.password}"}}`
-    fetch("https://chitter-backend-api-v2.herokuapp.com/users", {
+    fetch('https://chitter-backend-api-v2.herokuapp.com/users', {
       method: 'POST',
-      headers: {'Content-Type': 'application/json'},
+      headers: { 'Content-Type': 'application/json' },
       body: body
     })
-    .then(response => response.json())
+      .then(response => response.json())
   }
 
-  render() {
+  render () {
     return (
       <form onSubmit={this.handleSubmit}>
+        Sign Up
         <label>
           Username:
           <input type="text" name="username" onChange={this.handleUsername} />
@@ -41,7 +42,7 @@ class SignUp extends React.Component {
         </label>
         <input type="submit" value="Submit" />
       </form>
-    );
+    )
   }
 }
 

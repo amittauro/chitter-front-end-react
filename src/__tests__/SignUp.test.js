@@ -47,20 +47,3 @@ test('wheb submitting the form asks fetch to post data to api', () => {
     body: body
   })
 })
-
-test('after signing up shows the sign in page', async () => {
-  jest.spyOn(window, 'fetch').mockImplementation(() => {
-    return Promise.resolve({
-      json: () => Promise.resolve(data)
-    })
-  })
-  render(<SignUp />)
-  const username = screen.getByLabelText('Username:')
-  const password = screen.getByLabelText('Password:')
-  const button = screen.getByRole('button')
-  userEvent.type(username, 'user1')
-  userEvent.type(password, 'password1')
-  userEvent.click(button)
-  const element = await waitFor(() => screen.getByText('Sign In'))
-  expect(element).toBeInTheDocument()
-})

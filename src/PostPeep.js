@@ -1,10 +1,12 @@
 import React from 'react'
-import PropTypes from 'prop-types'
+import './css/forms.css'
 
 class PostPeep extends React.Component {
   constructor (props) {
     super(props)
-    this.state = { peep: '' }
+    const sessionId = sessionStorage.getItem('sessionId')
+    const sessionKey = sessionStorage.getItem('sessionKey')
+    this.state = { peep: '', sessionId: sessionId, sessionKey: sessionKey, error: null }
     this.handleSubmit = this.handleSubmit.bind(this)
     this.handlePeep = this.handlePeep.bind(this)
   }
@@ -15,37 +17,47 @@ class PostPeep extends React.Component {
 
   handleSubmit (event) {
     event.preventDefault()
-    const body = `{"peep": {"user_id":"${this.props.sessionId}", "body":"${this.state.peep}"}}`
+    const body = { peep: { user_id: this.state.sessionId, body: this.state.peep } }
     fetch('https://chitter-backend-api-v2.herokuapp.com/peeps', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        Authorization: `Token token="${this.props.sessionKey}"`
+        Authorization: `Token token="${this.state.sessionKey}"`
       },
-      body: body
+      body: JSON.stringify(body)
     })
       .then(response => response.json())
+      .then(
+        (result) => {
+          window.alert(`thanks for posting ${result.body}, view peeps to check it out!`)
+        },
+        (error) => {
+          this.setState({
+            error
+          })
+        }
+      )
   }
 
   render () {
-    return (
-        <div>
-          <h1>Post Peep</h1>
-          <form onSubmit={this.handleSubmit}>
-            <label>
-              Peep:
-              <input type="text" name="username" onChange={this.handlePeep} />
-            </label>
-            <input type="submit" value="Submit" />
-          </form>
-        </div>
-    )
+    const { error } = this.state
+    if (error) {
+      return <div>Unable to post peep. Have you signed in?</div>
+    } else {
+      return (
+          <div>
+            <form onSubmit={this.handleSubmit}>
+              <h1>Post Peep</h1>
+              <label>
+                Peep:
+                <input type="text" name="username" onChange={this.handlePeep} />
+              </label><br></br>
+              <input type="submit" value="Submit" />
+            </form>
+          </div>
+      )
+    }
   }
-}
-
-PostPeep.propTypes = {
-  sessionId: PropTypes.string.isRequired,
-  sessionKey: PropTypes.string.isRequired
 }
 
 export default PostPeep

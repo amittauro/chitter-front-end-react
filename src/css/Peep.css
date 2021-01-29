@@ -1,3 +1,21 @@
 .likePeep {
-  margin: 2px
+  background-color: #4CAF50; /* Green */
+  border: none;
+  color: white;
+  padding: 8px 15px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+}
+
+.peep {
+  margin-left: 30%;
+  margin-right: 30%;
+  margin-top: 1%;
+  margin-bottom: 1%;
+  background-color: lightblue;
+  padding: 2%;
+  border-radius: 10px;
+  opacity: 88%;
 }

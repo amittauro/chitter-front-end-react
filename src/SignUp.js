@@ -4,7 +4,7 @@ import './css/forms.css'
 class SignUp extends React.Component {
   constructor (props) {
     super(props)
-    this.state = { username: '', password: '', isLoaded: false, error: null, signedUp: false }
+    this.state = { username: '', password: '', isLoaded: false, error: null, signedUp: false, errorMessage: '' }
     this.handleSubmit = this.handleSubmit.bind(this)
     this.handleUsername = this.handleUsername.bind(this)
     this.handlePassword = this.handlePassword.bind(this)
@@ -35,9 +35,9 @@ class SignUp extends React.Component {
           })
         },
         (error) => {
-          window.alert('User already exists. Try signing in or creating a new account')
           this.setState({
             isLoaded: true,
+            errorMessage: 'User already exists. Try signing in or creating a new account',
             error
           })
         }
@@ -45,10 +45,11 @@ class SignUp extends React.Component {
   }
 
   render () {
-    const { error, isLoaded, signedUp } = this.state
+    const { error, isLoaded, signedUp, errorMessage } = this.state
     if (!isLoaded || error) {
       return (
         <form onSubmit={this.handleSubmit}>
+          <div>{errorMessage}</div>
           <h1>Sign Up</h1>
           <label>
             Username:
@@ -62,7 +63,7 @@ class SignUp extends React.Component {
         </form>
       )
     } else if (signedUp) {
-      return (<div>Thanks for signing up. You can now sign in.</div>)
+      return <div>Thanks for signing up. You can now sign in.</div>
     }
   }
 }

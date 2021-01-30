@@ -3,7 +3,7 @@ import userEvent from '@testing-library/user-event'
 import Peep from '../Peep'
 
 test('renders a Peep with a like button and peep body', () => {
-  render(<Peep id="1" userId="2" body="my first peep" />)
+  render(<Peep id="1" userId="2" body="my first peep" likes={2} />)
   const like = screen.getByText('like')
   const element = screen.getByText('my first peep')
   expect(like).toBeInTheDocument()
@@ -12,11 +12,14 @@ test('renders a Peep with a like button and peep body', () => {
 
 test('sends api request to like peep', () => {
   jest.spyOn(window, 'fetch')
-  render(<Peep id="1" userId="2" body="my first peep" />)
-  const like = screen.getByText('like')
-  userEvent.click(like)
-  const myHeaders = new Headers()
-  myHeaders.append('Content-Type', 'application/json')
-  myHeaders.append('Authorization', 'Token token=a_valid_session_key')
-  expect(window.fetch).toHaveBeenCalled()
+  jest.spyOn(global.sessionStorage, 'getItem').mockReturnValueOnce('sessionId').mockReturnValueOnce('sessionKey')
+  render(<Peep id="peepId" userId="2" body="my first peep" likes={2} />)
+  userEvent.click(screen.getByText('like'))
+  expect(window.fetch).toHaveBeenCalledWith('https://chitter-backend-api-v2.herokuapp.com/peeps/peepId/likes/sessionId', {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: 'Token token=sessionKey'
+    }
+  })
 })

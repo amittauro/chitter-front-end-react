@@ -4,9 +4,7 @@ import './css/forms.css'
 class PostPeep extends React.Component {
   constructor (props) {
     super(props)
-    const sessionId = sessionStorage.getItem('sessionId')
-    const sessionKey = sessionStorage.getItem('sessionKey')
-    this.state = { peep: '', sessionId: sessionId, sessionKey: sessionKey, error: null }
+    this.state = { peep: '', error: null, postedPeep: '' }
     this.handleSubmit = this.handleSubmit.bind(this)
     this.handlePeep = this.handlePeep.bind(this)
   }
@@ -17,19 +15,21 @@ class PostPeep extends React.Component {
 
   handleSubmit (event) {
     event.preventDefault()
-    const body = { peep: { user_id: this.state.sessionId, body: this.state.peep } }
+    const sessionId = sessionStorage.getItem('sessionId')
+    const sessionKey = sessionStorage.getItem('sessionKey')
+    const body = { peep: { user_id: sessionId, body: this.state.peep } }
     fetch('https://chitter-backend-api-v2.herokuapp.com/peeps', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        Authorization: `Token token="${this.state.sessionKey}"`
+        Authorization: `Token token=${sessionKey}`
       },
       body: JSON.stringify(body)
     })
       .then(response => response.json())
       .then(
         (result) => {
-          window.alert(`thanks for posting ${result.body}, view peeps to check it out!`)
+          this.setState({ postedPeep: `Thanks for posting: ${result.body}. Click Peeps to check it out!` })
         },
         (error) => {
           this.setState({
@@ -40,7 +40,7 @@ class PostPeep extends React.Component {
   }
 
   render () {
-    const { error } = this.state
+    const { error, postedPeep } = this.state
     if (error) {
       return <div>Unable to post peep. Have you signed in?</div>
     } else {
@@ -48,6 +48,7 @@ class PostPeep extends React.Component {
           <div>
             <form onSubmit={this.handleSubmit}>
               <h1>Post Peep</h1>
+              <div>{postedPeep}</div>
               <label>
                 Peep:
                 <input type="text" name="username" onChange={this.handlePeep} />

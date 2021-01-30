@@ -5,20 +5,19 @@ import './css/Peep.css'
 class Peep extends React.Component {
   constructor (props) {
     super(props)
-    const sessionId = sessionStorage.getItem('sessionId')
-    const sessionKey = sessionStorage.getItem('sessionKey')
-    this.state = { error: null, sessionId: sessionId, sessionKey: sessionKey }
-
+    this.state = { error: null }
     this.handleLike = this.handleLike.bind(this)
   }
 
   handleLike () {
-    const myHeaders = new Headers()
-    myHeaders.append('Content-Type', 'application/json')
-    myHeaders.append('Authorization', `Token token=${this.state.sessionKey}`)
-    fetch(`https://chitter-backend-api-v2.herokuapp.com/peeps/${this.props.id}/likes/${this.state.sessionId}`, {
+    const sessionId = sessionStorage.getItem('sessionId')
+    const sessionKey = sessionStorage.getItem('sessionKey')
+    fetch(`https://chitter-backend-api-v2.herokuapp.com/peeps/${this.props.id}/likes/${sessionId}`, {
       method: 'PUT',
-      headers: myHeaders
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Token token=${sessionKey}`
+      }
     })
       .then(response => response.json())
       .then(

@@ -4,7 +4,7 @@ import './css/forms.css'
 class SignIn extends React.Component {
   constructor (props) {
     super(props)
-    this.state = { username: '', password: '', isLoaded: false, error: null, signedIn: false }
+    this.state = { username: '', password: '', isLoaded: false, error: null, signedIn: false, errorMessage: '' }
     this.handleSubmit = this.handleSubmit.bind(this)
     this.handleUsername = this.handleUsername.bind(this)
     this.handlePassword = this.handlePassword.bind(this)
@@ -37,9 +37,9 @@ class SignIn extends React.Component {
           sessionStorage.setItem('sessionKey', data.session_key)
         },
         (error) => {
-          window.alert('It looks like these details are not valid. Try again or try signing up')
           this.setState({
             isLoaded: true,
+            errorMessage: 'It looks like these details are not valid. Try again or try signing up',
             error
           })
         }
@@ -47,10 +47,11 @@ class SignIn extends React.Component {
   }
 
   render () {
-    const { error, isLoaded, signedIn } = this.state
+    const { error, isLoaded, signedIn, errorMessage } = this.state
     if (!isLoaded || error) {
       return (
           <form onSubmit={this.handleSubmit}>
+            <div>{errorMessage}</div>
             <h1>Sign In</h1>
             <label>
               Username:
@@ -64,7 +65,7 @@ class SignIn extends React.Component {
           </form>
       )
     } else if (signedIn) {
-      return (<div>Thanks for signing in. You can now post or like a peep</div>)
+      return <div>Thanks for signing in. You can now post or like a peep</div>
     }
   }
 }

@@ -43,6 +43,7 @@ class Peep extends React.Component {
       <div className="peep">
         <p>{this.props.body}</p>
         <button className="likePeep" onClick={this.handleLike}>like</button>
+        Likes: {this.props.likes}
       </div>
     )
   }
@@ -51,7 +52,8 @@ class Peep extends React.Component {
 Peep.propTypes = {
   id: PropTypes.string.isRequired,
   userId: PropTypes.string.isRequired,
-  body: PropTypes.string.isRequired
+  body: PropTypes.string.isRequired,
+  likes: PropTypes.number.isRequired
 }
 
 export default Peep

@@ -42,7 +42,7 @@ class Peeps extends React.Component {
           <ul>
             {peeps.map(peep => (
             <div key={peep.id}>
-              <Peep id={peep.id.toString()} userId={peep.user.id.toString()} body={peep.body} />
+              <Peep id={peep.id.toString()} userId={peep.user.id.toString()} body={peep.body} likes={peep.likes.length}/>
             </div>
             ))}
           </ul>

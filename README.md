@@ -1,4 +1,4 @@
-### Chitter Front End React App
+# Chitter Front End React App
 
 Chitter is an imitation of a social media app, built as a practice project with React.
 

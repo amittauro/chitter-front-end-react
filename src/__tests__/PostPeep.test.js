@@ -22,12 +22,12 @@ test('can fill in the form', () => {
 })
 
 test('when submitting the form asks fetch to post data to api', async () => {
+  jest.spyOn(global.sessionStorage, 'getItem').mockReturnValueOnce('sessionId').mockReturnValueOnce('sessionKey')
   jest.spyOn(window, 'fetch').mockImplementation(() => {
     return Promise.resolve({
       json: () => Promise.resolve(data)
     })
   })
-  jest.spyOn(global.sessionStorage, 'getItem').mockReturnValueOnce('sessionId').mockReturnValueOnce('sessionKey')
   render(<PostPeep />)
   userEvent.type(screen.getByLabelText('Peep:'), 'my first peep')
   userEvent.click(screen.getByRole('button'))

@@ -1,11 +1,25 @@
-input[type='text'] {
+/* input[type='text'] {
   margin: 6px;
-}
+} */
 
-form {
+/* form {
   margin-left: 10px;
+} */
+
+/* input[type='submit'] {
+  margin-left: 1px;
+} */
+
+h1 {
+  text-align: center;
+  color: #1DA1F2;
 }
 
-input[type='submit'] {
-  margin-left: 1px;
+label {
+  font-weight: bold;
+}
+
+input {
+  width: 100%;
+  font-size: 1.3em;
 }

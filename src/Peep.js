@@ -40,9 +40,11 @@ class Peep extends React.Component {
   render () {
     return (
       <div className="peep">
-        <p>{this.props.body}</p>
-        <button className="likePeep" onClick={this.handleLike}>like</button>
+        <p className='peep-body'>{this.props.body}</p>
+        <div className='container'>
+        <button onClick={this.handleLike}>like</button>
         Likes: {this.props.likes}
+        </div>
       </div>
     )
   }

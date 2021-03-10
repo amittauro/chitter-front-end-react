@@ -25,7 +25,7 @@ class Peep extends React.Component {
           if (result.user[0] === 'has already been taken') {
             window.alert('you have already liked this peep try a different one')
           } else {
-            window.alert('Thanks for liking a peep')
+            window.alert('Thanks for liking a peep. Refresh page to view likes')
           }
         },
         (error) => {

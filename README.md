@@ -1,6 +1,6 @@
 # Chitter Front End React App
 
-Chitter is an imitation of a social media app, built as a practice project with React. The project focuses on user interface testing with React Testing Library and fetching data. The next steps would be to add further styling.
+Chitter is an imitation of a social media app, built as a practice project with React. The project focuses on user interface testing with React Testing Library and fetching data. The next steps would be to add further styling and page to automatically update likes after a peep is liked. 
 
 Chitter consumes API data from a back-end API: [chitter-api-backend](https://github.com/makersacademy/chitter_api_backend). It offers users the opportunity:
 

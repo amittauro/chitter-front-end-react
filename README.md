@@ -31,3 +31,7 @@ To run tests:
 npm install
 npm test
 ```
+
+## Heroku
+
+Deployed at [Heroku](https://chitter-react.herokuapp.com)
